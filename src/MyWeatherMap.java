@@ -72,7 +72,6 @@ public class MyWeatherMap extends OpenWeatherMap {
 	 public CurrentWeather currentWeatherByZipCode(String zipCode)
 	            throws IOException, JSONException {
 	        String response = owmResponse.currentWeatherByZipCode(zipCode);
-	        System.out.println("the string response: " + response);
 	        return this.currentWeatherFromRawResponse(response);
 	 }
 	 

@@ -16,7 +16,8 @@ public class Main {
 		//throws JSONException {
 		
 		System.out.println("Want to check out the weather?");
-		System.out.println("Please enter the \"CITY NAME, UNIT(F/C)\" -> Chicago,F: ");
+		System.out.println("Please enter the \"ZIP/NAME, ZIPCODE/CITY NAME, UNIT(F/C)\"");
+		System.out.println("example: ZIP, 47906,C");
 		
 		// get user input
 		Scanner input = new Scanner(System.in);
@@ -24,17 +25,17 @@ public class Main {
 	//	System.out.println(inputStr);
 		String[] strArr = inputStr.split(",");  // split on comma
 		
-		// create weather map object
-		 OpenWeatherMap owm = new OpenWeatherMap("");
-		 CurrentWeather cwd = owm.currentWeatherByCityName("London","UK");
-		 System.out.println("temperature at "+ cwd.getCityName() + ": "+ cwd.getMainInstance().getTemperature());
-		 
+		fetchWeather(strArr);
+		
+	}
+	
+	public static void fetchWeather(String[] strArr) throws IOException, JSONException{
 		 
 		 // my weather map object
 		 MyWeatherMap mwm = new MyWeatherMap("");
 		 
 		 // set desired temperature unit
-		 if(strArr[1].equals("F")){
+		 if(strArr[2].equalsIgnoreCase("F")){
 			 mwm.setUnits(Units.IMPERIAL);
 			 mwm.setOwmUnit(Units.IMPERIAL);
 		 }else {
@@ -42,22 +43,21 @@ public class Main {
 			 mwm.setOwmUnit(Units.METRIC);
 		 }
 		 
-		 CurrentWeather mcwd = mwm.currentWeatherByCityName(strArr[0]);
-		 System.out.println("temperature at "+ mcwd.getCityName() + ": "+ mcwd.getMainInstance().getTemperature());
-		 
+		 // search by city name or zipcode
+		 if(strArr[0].equalsIgnoreCase("NAME")){
+			 CurrentWeather mcwd = mwm.currentWeatherByCityName(strArr[1]);  //my current weather data
+			 System.out.println("temperature at "+ mcwd.getCityName() + ": "+ mcwd.getMainInstance().getTemperature());
+			 System.out.println("Max temp, Min temp : "+mcwd.getMainInstance().getMaxTemperature()+", "+mcwd.getMainInstance().getMinTemperature());
+			 System.out.println("overall weather: " + mcwd.getWeatherInstance(0).getWeatherDescription());
+			 
+		 }else if(strArr[0].equalsIgnoreCase("ZIP")){
 		 // test by zipcode
-		 CurrentWeather zipw = mwm.currentWeatherByZipCode("47906");
-		 System.out.println("temperature at "+ zipw.getCityName() + ": "+ zipw.getMainInstance().getTemperature());
-		 
-	        // getting current weather data for the "London" city
-	  //   CurrentWeather cwd = owm.currentWeatherByCityName("London");
-		
-
-/*	        // printing the max./min. temperature
-	     System.out.println("Temperature: " + cwd.getMainInstance().getMaxTemperature()
-	                            + "/" + cwd.getMainInstance().getMinTemperature() + "\'F");
- */  
-	    
+			 CurrentWeather mcwd = mwm.currentWeatherByZipCode(strArr[1]);
+			 System.out.println("temperature at "+ mcwd.getCityName() + ": "+ mcwd.getMainInstance().getTemperature());
+			 System.out.println("Max temp, Min temp : "+mcwd.getMainInstance().getMaxTemperature()+", "+mcwd.getMainInstance().getMinTemperature());
+			 System.out.println("overall weather: " + mcwd.getWeatherInstance(0).getWeatherDescription());
+			// System.out.println("temperature at "+ mcwd.getCityName() + ": "+ mcwd.getMainInstance().getTemperature());
+		 }
 	}
 
 }
