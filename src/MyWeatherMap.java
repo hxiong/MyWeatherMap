@@ -37,14 +37,6 @@ public class MyWeatherMap extends OpenWeatherMap {
     private final MyOWMAddress owmAddress;
     private final MyOWMResponse owmResponse;
     private final MyOWMProxy owmProxy;
-	
-	
-	// constructors
-/*	public MyWeatherMap(Units units, Language lang, String apiKey) {
-		super(units, lang, apiKey);
-		// TODO Auto-generated constructor stub
-	}
-	*/
     
     public MyWeatherMap(String apiKey) {
 		super(apiKey);
@@ -82,15 +74,7 @@ public class MyWeatherMap extends OpenWeatherMap {
 	        public MyOWMResponse(MyOWMAddress owmAddress, MyOWMProxy owmProxy) {
 	            this.owmAddress = owmAddress;
 	            this.owmProxy = owmProxy;
-	        }
-
-	        /*
-	        Responses for current weather
-	         */
-	   /*     public String currentWeatherByCityName(String cityName) throws UnsupportedEncodingException {
-	            String address = owmAddress.currentWeatherByCityName(cityName);
-	            return httpGET(address);
-	        }*/
+	        }   
 	        
 	       public String currentWeatherByZipCode(String zipCode) {
 	            String address = owmAddress.currentWeatherByZipCode(zipCode);
@@ -231,21 +215,6 @@ public class MyWeatherMap extends OpenWeatherMap {
 	                    .append(PARAM_APPID).append(this.appId)
 	                    .toString();
 	      }
-	     
-	      
-	      // working one
-	      /*
-	      public String currentWeatherByZipCode(String zipCode) {
-	    	  
-	    	  	System.out.println("am I here?");
-	    	  	
-	            return new StringBuilder()
-	                    .append(URL_API).append(URL_CURRENT)
-	                 //   .append("zip=").append(zipCode).append("&")
-	                    .append("zip=").append(zipCode).append(",us")
-	                    .toString();
-	      }
-	      */
 	      
 	 }
 
